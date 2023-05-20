@@ -31,7 +31,7 @@ if __name__ == "__main__":
             # Read feed
             ret, frame = cap.read()
 
-            # 0. 결과 값을 return할 수 있는 String으로 추출해보기
+            # 0. 결과 값을 return할 수 있는 String으로 추출해보기 (O)
 
             # 1. 일단 더미데이터를 넣어서 결과값이 추출가능한지 수정해보기
             
@@ -48,6 +48,8 @@ if __name__ == "__main__":
             # Process results
             sign_detected, is_recording = sign_recorder.process_results(results)
 
+            print("예측라벨 : ")
+            print(results)
 
             # Update the frame (draw landmarks & display result)
             webcam_manager.update(frame, results, sign_detected, is_recording)

@@ -8,7 +8,7 @@ from utils.landmark_utils import extract_landmarks
 
 
 class SignRecorder(object):
-    def __init__(self, reference_signs: pd.DataFrame, seq_len=100):
+    def __init__(self, reference_signs: pd.DataFrame, seq_len=50):
         # 초기 모드 값 설정 (데이터를 모으는 길이, recording여부 설정)
         self.is_recording = False
         self.seq_len = seq_len
