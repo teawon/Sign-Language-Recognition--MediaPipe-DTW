@@ -10,7 +10,6 @@ from utils.landmark_utils import extract_landmarks
 class SignRecorder(object):
     def __init__(self, reference_signs: pd.DataFrame, seq_len=50):
         # 초기 모드 값 설정 (데이터를 모으는 길이, recording여부 설정)
-        self.is_recording = False
         self.seq_len = seq_len
 
         # List of results stored each frame
@@ -23,23 +22,21 @@ class SignRecorder(object):
         # recording시작 - 시작 시점부터 데이터를 모은다
 
         self.reference_signs["distance"].values[:] = 0
-        self.is_recording = True
 
     def process_results(self, results) -> (str, bool):
        
 
-        if self.is_recording:
-            # 1. 데이터가 덜 쌓였다면 랜드마크값을 더 추가
-    
-            if len(self.recorded_results) < self.seq_len:
-                self.recorded_results.append(results)
-            else:
-            # 2. 데이터가 충분하다면 계산 시작
-                self.compute_distances()
+        # 1. 데이터가 덜 쌓였다면 랜드마크값을 더 추가
+
+        if len(self.recorded_results) < self.seq_len:
+            self.recorded_results.append(results)
+        else:
+        # 2. 데이터가 충분하다면 계산 시작
+            self.compute_distances()
 
         if np.sum(self.reference_signs["distance"].values) == 0:
-            return "", self.is_recording
-        return self._get_sign_predicted(), self.is_recording
+            return ""
+        return self._get_sign_predicted()
 
     def compute_distances(self):
         """
@@ -65,7 +62,6 @@ class SignRecorder(object):
 
         # Reset variables
         self.recorded_results = []
-        self.is_recording = False
 
     def _get_sign_predicted(self, batch_size=5, threshold=0.5):
         """

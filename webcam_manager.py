@@ -18,7 +18,7 @@ class WebcamManager(object):
         self.sign_detected = ""
 
     def update(
-        self, frame: np.ndarray, results, sign_detected: str, is_recording: bool
+        self, frame: np.ndarray, results, sign_detected: str
     ):
         self.sign_detected = sign_detected
 
@@ -36,10 +36,8 @@ class WebcamManager(object):
         frame = self.draw_text(frame)
 
         # Chose circle color
-        color = WHITE_COLOR
-        if is_recording:
-            color = RED_COLOR
-
+        color = RED_COLOR
+      
         # Update the frame
         cv2.circle(frame, (30, 30), 20, color, -1)
         cv2.imshow("OpenCV Feed", frame)

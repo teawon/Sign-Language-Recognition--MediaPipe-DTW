@@ -46,18 +46,16 @@ if __name__ == "__main__":
 
             
             # Process results
-            sign_detected, is_recording = sign_recorder.process_results(results)
+            sign_detected = sign_recorder.process_results(results)
 
             print("예측라벨 : ")
             print(results)
 
             # Update the frame (draw landmarks & display result)
-            webcam_manager.update(frame, results, sign_detected, is_recording)
+            webcam_manager.update(frame, results, sign_detected, True)
 
             pressedKey = cv2.waitKey(1) & 0xFF
-            if pressedKey == ord("r"):  # Record pressing r
-                sign_recorder.record()
-            elif pressedKey == ord("q"):  # Break pressing q
+            if pressedKey == ord("q"):  # q누르면 종료
                 break
 
         cap.release()
